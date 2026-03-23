@@ -931,22 +931,22 @@ code{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--bg3);padd
     <!-- Rollout recommendation -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px">
       <div class="card a-teal" style="padding:16px">
-        <div class="card-tag">Stage 1 · Now</div>
+        <div class="card-tag">Phase 1 · Now</div>
         <div class="card-title">YouTube + Reddit</div>
         <div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--teal);font-weight:600;margin:4px 0">$0/mo</div>
         <div class="card-body">Validate full workflow. Confirm India team approves ≥80% of clips before spending anything on Apify.</div>
       </div>
       <div class="card a-purple" style="padding:16px">
-        <div class="card-tag">Stage 2 · Validate ROI</div>
+        <div class="card-tag">Phase 2 · Validate ROI</div>
         <div class="card-title">+ Instagram</div>
         <div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--purple);font-weight:600;margin:4px 0">+$62/mo</div>
         <div class="card-body">Cheapest Apify source. Adds Reels content. Measure if clip approval rate or quality improves.</div>
       </div>
       <div class="card" style="padding:16px;border-color:rgba(220,38,38,.2);background:var(--coral-lt)">
-        <div class="card-tag" style="color:var(--coral)">Stage 3 · Only if justified</div>
+        <div class="card-tag" style="color:var(--coral)">Phase 3 · Only if justified</div>
         <div class="card-title">+ Facebook + TikTok</div>
         <div style="font-family:'DM Mono',monospace;font-size:18px;color:var(--coral);font-weight:600;margin:4px 0">+$420/mo</div>
-        <div class="card-body">Only add after Stage 2 ROI confirmed. TikTok alone is $300/mo — requires clear content gap justification.</div>
+        <div class="card-body">Only add after Phase 2 ROI confirmed. TikTok alone is $300/mo — requires clear content gap justification.</div>
       </div>
     </div>
 
@@ -955,101 +955,178 @@ code{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--bg3);padd
 
 
 <!-- ═══════════════════════════════════════
-     SLIDE 11 — INTERACTIVE GANTT TIMELINE
+     SLIDE 11 — INTERACTIVE GANTT TIMELINE (redesigned)
 ═══════════════════════════════════════ -->
-<div class="slide slide-std" data-index="10">
+<div class="slide slide-std slide-timeline" data-index="10">
   <div class="slide-header">
     <div class="slide-header-left"><div class="slide-num">10 / 11</div><h2>Project <span class="accent">Timeline</span></h2></div>
-    <div class="slide-meta">8 weeks · 3 phases · hover bars for detail</div>
+    <div class="slide-meta">8 weeks · hover bars for detail · filter by phase</div>
   </div>
 
-  <div style="flex:1;display:flex;flex-direction:column;gap:10px;position:relative">
-
-    <!-- Legend + week filter -->
-    <div style="display:flex;align-items:center;justify-content:space-between">
-      <div style="display:flex;gap:14px;align-items:center">
-        <div style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="filterPhase(1)" id="leg1">
-          <div style="width:14px;height:10px;border-radius:3px;background:#ea580c"></div>
-          <span style="font-size:11px;color:var(--muted)">Phase 1</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="filterPhase(2)" id="leg2">
-          <div style="width:14px;height:10px;border-radius:3px;background:#6d28d9"></div>
-          <span style="font-size:11px;color:var(--muted)">Phase 2</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="filterPhase(3)" id="leg3">
-          <div style="width:14px;height:10px;border-radius:3px;background:#78716c"></div>
-          <span style="font-size:11px;color:var(--muted)">Phase 3</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:5px;cursor:pointer" onclick="filterPhase(0)" id="leg0">
-          <div style="width:14px;height:10px;border-radius:3px;background:var(--border2)"></div>
-          <span style="font-size:11px;color:var(--muted)">Show all</span>
-        </div>
+  <div class="tl-shell">
+    <div class="tl-toolbar">
+      <div class="tl-toolbar-label">Focus</div>
+      <div class="tl-legend" role="group" aria-label="Phase filter">
+        <button type="button" class="tl-pill tl-pill--p1" onclick="filterPhase(1)" id="leg1"><span class="tl-pill-swatch"></span>Phase 1</button>
+        <button type="button" class="tl-pill tl-pill--p2" onclick="filterPhase(2)" id="leg2"><span class="tl-pill-swatch"></span>Phase 2</button>
+        <button type="button" class="tl-pill tl-pill--p3" onclick="filterPhase(3)" id="leg3"><span class="tl-pill-swatch"></span>Phase 3</button>
+        <button type="button" class="tl-pill tl-pill--all tl-pill--active" onclick="filterPhase(0)" id="leg0"><span class="tl-pill-swatch"></span>All tasks</button>
       </div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:8px;height:8px;border-radius:50%;background:#ea580c;border:2px solid #fff;box-shadow:0 0 0 1.5px #ea580c"></div>
-        <span style="font-size:11px;color:var(--muted)">= milestone / decision</span>
+      <div class="tl-legend-note">
+        <span class="tl-milestone-dot" aria-hidden="true"></span>
+        <span>Dot on bar = milestone</span>
       </div>
     </div>
 
-    <!-- Gantt table -->
-    <div id="gantt-wrap" style="flex:1;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column">
-
-      <!-- Header -->
-      <div class="g-row g-head" style="display:grid;grid-template-columns:156px repeat(8,1fr);background:var(--bg2);border-bottom:1.5px solid var(--border);flex-shrink:0">
-        <div style="padding:7px 10px;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;border-right:1px solid var(--border)">Task</div>
-        <div class="g-wk" data-w="1" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#ea580c;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W1</div>
-        <div class="g-wk" data-w="2" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#ea580c;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W2</div>
-        <div class="g-wk" data-w="3" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#6d28d9;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W3</div>
-        <div class="g-wk" data-w="4" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#6d28d9;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W4</div>
-        <div class="g-wk" data-w="5" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#78716c;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W5</div>
-        <div class="g-wk" data-w="6" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#78716c;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W6</div>
-        <div class="g-wk" data-w="7" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#78716c;text-align:center;font-weight:600;border-right:1px solid var(--border);cursor:pointer">W7</div>
-        <div class="g-wk" data-w="8" style="padding:7px 0;font-family:'DM Mono',monospace;font-size:10px;color:#78716c;text-align:center;font-weight:600;cursor:pointer">W8+</div>
+    <div id="gantt-wrap" class="tl-gantt">
+      <div class="tl-phase-strip" aria-hidden="true">
+        <span class="tl-phase-seg tl-phase-seg--1" style="grid-column:2 / span 2">Phase 1</span>
+        <span class="tl-phase-seg tl-phase-seg--2" style="grid-column:4 / span 2">Phase 2</span>
+        <span class="tl-phase-seg tl-phase-seg--3" style="grid-column:6 / span 3">Phase 3</span>
       </div>
-
-      <!-- Rows injected by JS -->
-      <div id="gantt-rows" style="flex:1;display:flex;flex-direction:column;overflow:hidden"></div>
-
+      <div class="g-row g-head tl-g-head">
+        <div class="g-head-task">Task</div>
+        <div class="g-wk g-wk--p1" data-w="1">W1</div>
+        <div class="g-wk g-wk--p1" data-w="2">W2</div>
+        <div class="g-wk g-wk--p2" data-w="3">W3</div>
+        <div class="g-wk g-wk--p2" data-w="4">W4</div>
+        <div class="g-wk g-wk--p3" data-w="5">W5</div>
+        <div class="g-wk g-wk--p3" data-w="6">W6</div>
+        <div class="g-wk g-wk--p3" data-w="7">W7</div>
+        <div class="g-wk g-wk--p3" data-w="8">W8+</div>
+      </div>
+      <div id="gantt-rows" class="tl-gantt-rows"></div>
     </div>
 
-    <!-- Tooltip -->
-    <div id="g-tip" style="display:none;position:fixed;background:#1c1917;color:#f0ece4;font-size:11.5px;padding:10px 14px;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.18);pointer-events:none;z-index:900;max-width:240px;line-height:1.55"></div>
+    <div class="tl-decisions" role="region" aria-label="Decisions and blockers">
+      <article class="tl-dcard tl-dcard--blocker">
+        <div class="tl-dcard-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="tl-dcard-main">
+          <span class="tl-dcard-eyebrow">Decision required · Phase 1</span>
+          <h3 class="tl-dcard-title">Upload method</h3>
+          <p class="tl-dcard-copy">Pick how approved clips reach Fando: direct API, webhook, or CMS connector. Gates Phase&nbsp;3 auto-publish.</p>
+          <div class="tl-dcard-foot">
+            <span class="tl-dcard-chip">Weeks 2–3</span>
+            <span class="tl-dcard-hint">Rows: Upload method TBD</span>
+          </div>
+        </div>
+      </article>
+      <article class="tl-dcard tl-dcard--gate">
+        <div class="tl-dcard-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="tl-dcard-main">
+          <span class="tl-dcard-eyebrow">Decision required · Phase 2</span>
+          <h3 class="tl-dcard-title">Paid platform expansion</h3>
+          <p class="tl-dcard-copy">Add TikTok ($300/mo) or Facebook ($120/mo) only if Instagram proves a real content gap vs YouTube.</p>
+          <div class="tl-dcard-foot">
+            <span class="tl-dcard-chip">Week 4</span>
+            <span class="tl-dcard-hint">Rows: TikTok / FB decision</span>
+          </div>
+        </div>
+      </article>
+    </div>
 
+    <div id="g-tip" class="tl-tip" role="tooltip"></div>
   </div>
 </div>
 
 <style>
-.g-row-data{display:grid;grid-template-columns:156px repeat(8,1fr);align-items:center;border-bottom:1px solid var(--border);transition:background .15s;cursor:default;flex-shrink:0}
+/* ── Timeline slide layout ───────────────────────────── */
+.slide-timeline .tl-shell{flex:1;display:flex;flex-direction:column;gap:12px;position:relative;min-height:0}
+.slide-timeline .tl-decisions{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex-shrink:0}
+.tl-dcard{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(135deg,#fff 0%,var(--bg2) 100%);box-shadow:var(--shadow-sm);text-align:left}
+.tl-dcard--blocker{border-color:rgba(234,88,12,.35);background:linear-gradient(135deg,#fff8f4 0%,#fff 55%)}
+.tl-dcard--gate{border-color:rgba(109,40,217,.28);background:linear-gradient(135deg,#faf8ff 0%,#fff 55%)}
+.tl-dcard-mark{flex-shrink:0;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.tl-dcard--blocker .tl-dcard-mark{background:var(--orange-lt);color:var(--orange);border:1px solid rgba(234,88,12,.2)}
+.tl-dcard--gate .tl-dcard-mark{background:var(--purple-lt);color:var(--purple);border:1px solid rgba(109,40,217,.15)}
+.tl-dcard-main{min-width:0;flex:1}
+.tl-dcard-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.tl-dcard-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 6px;line-height:1.25}
+.tl-dcard-copy{font-size:11.5px;color:var(--text2);line-height:1.55;margin:0}
+.tl-dcard-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.tl-dcard-chip{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.tl-dcard-hint{font-size:10px;color:var(--muted)}
+.tl-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;flex-shrink:0}
+.tl-toolbar-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tl-legend{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tl-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:#fff;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s;box-shadow:var(--shadow-sm)}
+.tl-pill:hover{background:var(--bg2);border-color:var(--border2)}
+.tl-pill--active{background:var(--text);color:#fff;border-color:var(--text);box-shadow:var(--shadow)}
+.tl-pill--active .tl-pill-swatch{box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+.tl-pill-swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.tl-pill--p1 .tl-pill-swatch{background:#ea580c}
+.tl-pill--p2 .tl-pill-swatch{background:#6d28d9}
+.tl-pill--p3 .tl-pill-swatch{background:#78716c}
+.tl-pill--all .tl-pill-swatch{background:linear-gradient(135deg,#ea580c 33%,#6d28d9 33% 66%,#78716c 66%)}
+.tl-legend-note{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--muted)}
+.tl-milestone-dot{width:8px;height:8px;border-radius:50%;background:#ea580c;border:2px solid #fff;box-shadow:0 0 0 1.5px #ea580c;flex-shrink:0}
+/* Gantt container */
+.tl-gantt{flex:1;display:flex;flex-direction:column;min-height:220px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:auto;box-shadow:var(--shadow-sm)}
+.tl-phase-strip{display:grid;grid-template-columns:minmax(168px,1.05fr) repeat(8,minmax(52px,1fr));column-gap:0;border-bottom:1px solid var(--border);background:var(--bg2)}
+.tl-phase-seg{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:6px 4px;font-weight:600}
+.tl-phase-seg--1{background:rgba(234,88,12,.1);color:#c2410c}
+.tl-phase-seg--2{background:rgba(109,40,217,.08);color:#5b21b6}
+.tl-phase-seg--3{background:rgba(120,113,108,.1);color:#57534e}
+.tl-g-head{display:grid;grid-template-columns:minmax(168px,1.05fr) repeat(8,minmax(52px,1fr));align-items:stretch;border-bottom:1.5px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:2}
+.g-head-task{padding:10px 12px;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;border-right:1px solid var(--border);display:flex;align-items:center}
+.g-wk{padding:10px 4px;font-family:'DM Mono',monospace;font-size:10px;text-align:center;font-weight:700;border-right:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center}
+.g-wk:last-child{border-right:none}
+.g-wk--p1{background:rgba(234,88,12,.06);color:#c2410c}
+.g-wk--p2{background:rgba(109,40,217,.06);color:#5b21b6}
+.g-wk--p3{background:rgba(120,113,108,.07);color:#44403c}
+.g-wk:hover{filter:brightness(.97)}
+.g-wk.active-col{box-shadow:inset 0 -3px 0 var(--orange)}
+.tl-gantt-rows{display:flex;flex-direction:column;min-width:min(100%,720px)}
+.g-row-data{display:grid;grid-template-columns:minmax(168px,1.05fr) repeat(8,minmax(52px,1fr));align-items:stretch;border-bottom:1px solid var(--border);transition:background .15s;flex-shrink:0;min-height:40px}
+.g-row-data:nth-child(even){background:rgba(247,245,240,.45)}
 .g-row-data:last-child{border-bottom:none}
-.g-row-data:hover{background:#fafaf8}
-.g-row-data.phase-highlight{background:#fffbf5}
-.g-row-data.dim{opacity:.22}
-.g-cell{height:100%;border-right:1px solid var(--border);display:flex;align-items:center;padding:3px 2px}
+.g-row-data:hover{background:#fafaf8!important}
+.g-row-data.dim{opacity:.2;pointer-events:none}
+.g-row-data[data-warn="1"]{background:linear-gradient(90deg,rgba(254,243,232,.9) 0%,rgba(255,255,255,.4) 28%)!important}
+.g-cell{border-right:1px solid var(--border);display:flex;align-items:center;padding:4px 3px;min-height:40px}
 .g-cell:last-child{border-right:none}
-.g-bar{height:22px;border-radius:5px;display:flex;align-items:center;padding:0 7px;width:100%;transition:filter .15s,transform .15s;cursor:pointer;position:relative;overflow:hidden}
-.g-bar::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s;border-radius:5px}
-.g-bar:hover::after{background:rgba(255,255,255,.15)}
-.g-bar.milestone::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:inherit;border:2px solid #fff;box-shadow:0 0 0 1.5px currentColor;z-index:1}
-.g-bar-p1{background:#ea580c}
-.g-bar-p2{background:#6d28d9}
-.g-bar-p3{background:#78716c}
-.g-bar-soft{background:rgba(234,88,12,.12);border:1.5px dashed rgba(234,88,12,.5)}
-.g-bar-soft2{background:rgba(109,40,217,.1);border:1.5px dashed rgba(109,40,217,.4)}
-.g-bar-soft3{background:rgba(120,113,108,.12);border:1px solid rgba(120,113,108,.3)}
-.g-bar-teal{background:rgba(13,150,105,.12);border:1px solid rgba(13,150,105,.3)}
-.g-bar-warn{background:rgba(234,88,12,.15);border:1.5px dashed rgba(234,88,12,.5)}
+.g-bar{min-height:26px;border-radius:7px;display:flex;align-items:center;padding:0 8px;width:100%;transition:filter .15s,transform .15s,box-shadow .15s;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.g-bar::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .15s;border-radius:7px}
+.g-bar:hover::after{background:rgba(255,255,255,.12)}
+.g-bar:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.g-bar.milestone::before{content:'';position:absolute;right:6px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid rgba(255,255,255,.95);box-shadow:0 0 0 1.5px rgba(0,0,0,.12);z-index:2}
+.g-bar-p1{background:linear-gradient(180deg,#f97316,#ea580c)}
+.g-bar-p2{background:linear-gradient(180deg,#7c3aed,#6d28d9)}
+.g-bar-p3{background:linear-gradient(180deg,#78716c,#57534e)}
+.g-bar-soft{background:rgba(234,88,12,.14);border:1.5px dashed rgba(234,88,12,.45)}
+.g-bar-soft2{background:rgba(109,40,217,.1);border:1.5px dashed rgba(109,40,217,.38)}
+.g-bar-soft3{background:rgba(120,113,108,.11);border:1px solid rgba(120,113,108,.28)}
+.g-bar-teal{background:rgba(13,150,105,.14);border:1px solid rgba(13,150,105,.32)}
+.g-bar-warn{background:linear-gradient(90deg,rgba(254,215,170,.55),rgba(255,237,213,.9));border:1.5px dashed rgba(234,88,12,.55)}
 .g-span{grid-column:span 2}
 .g-span3{grid-column:span 3}
 .g-span4{grid-column:span 4}
 .g-span5{grid-column:span 5}
 .g-span6{grid-column:span 6}
 .g-span7{grid-column:span 7}
-.g-label{font-size:9px;color:#fff;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.g-label-soft{font-size:9px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.g-task-label{padding:0 10px;font-size:11.5px;font-weight:500;color:var(--text);border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:100%;display:flex;align-items:center}
-.g-task-label.warn{color:#ea580c}
-.g-wk.active-col{background:rgba(234,88,12,.06)}
-.g-row-data.active-col-row .g-cell:nth-child(var(--aw)){background:rgba(234,88,12,.04)}
+.g-label{font-size:9px;color:#fff;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 1px rgba(0,0,0,.12)}
+.g-label-soft{font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-task-label{padding:0 12px;font-size:12px;font-weight:600;color:var(--text);border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:8px;min-height:40px}
+.g-task-label::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--border2)}
+.g-row-data[data-phase="1"] .g-task-label::before{background:#ea580c}
+.g-row-data[data-phase="2"] .g-task-label::before{background:#6d28d9}
+.g-row-data[data-phase="3"] .g-task-label::before{background:#78716c}
+.g-task-label.warn{color:#c2410c;font-weight:700}
+.tl-tip{display:none;position:fixed;background:#1c1917;color:#f0ece4;font-size:11.5px;padding:12px 16px;border-radius:11px;box-shadow:0 12px 36px rgba(0,0,0,.22);pointer-events:none;z-index:900;max-width:280px;line-height:1.55;border:1px solid rgba(255,255,255,.08)}
+.tl-tip.tl-tip--warn{border-left:4px solid #ea580c;padding-left:14px}
+@media(max-width:1024px){
+  .slide-timeline .tl-decisions{grid-template-columns:1fr}
+  .tl-legend-note{width:100%;margin-left:0}
+}
+@media(max-width:640px){
+  .tl-toolbar{flex-direction:column;align-items:flex-start}
+  .tl-legend{width:100%}
+  .tl-pill{flex:1;justify-content:center;min-width:calc(50% - 4px)}
+}
 </style>
 
 <script>
@@ -1081,20 +1158,26 @@ const ROWS = [
    bars:[{cols:'6-8',cls:'g-bar-soft3',text:'Next.js · Fando API integration',span:'g-span3'}]},
 ];
 
-const colMap = {'1':2,'2':3,'3':4,'4':5,'5':6,'6':7,'7':8,'8':9,
-                '2-8':3,'3-8':4,'4-8':5,'5-8':6,'6-8':7,'3-7':4,'4-7':5,
-                '2-3':3,'3-4':4,'4-5':5};
-
 let activePhase = 0;
+
+function syncLegendPills(){
+  const activeId = activePhase === 0 ? 'leg0' : 'leg' + activePhase;
+  ['leg0','leg1','leg2','leg3'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('tl-pill--active', id === activeId);
+  });
+}
 
 function buildRows(){
   const container = document.getElementById('gantt-rows');
   container.innerHTML = '';
   ROWS.forEach((row, ri) => {
     const div = document.createElement('div');
-    div.className = 'g-row-data' + (row.phase===1?'':row.phase===2?' ':' ') + (row.warn?' phase-highlight':'');
+    div.className = 'g-row-data';
+    div.dataset.phase = String(row.phase);
+    if(row.warn) div.dataset.warn = '1';
     if(activePhase && row.phase !== activePhase) div.classList.add('dim');
-    div.style.minHeight = '36px';
+    div.style.minHeight = '40px';
 
     // Task label cell
     const lbl = document.createElement('div');
@@ -1154,7 +1237,11 @@ function buildRows(){
 
 function showTip(e, text, warn){
   const tip = document.getElementById('g-tip');
-  tip.innerHTML = warn ? '<span style="color:#ea580c;font-weight:600">⚠ Decision required</span><br>' + text.replace('⚠ ','') : text;
+  const body = warn
+    ? '<strong style="display:block;color:#fdba74;font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Decision required</strong>' + text.replace(/^⚠\s*/,'')
+    : text;
+  tip.innerHTML = body;
+  tip.classList.toggle('tl-tip--warn', !!warn);
   tip.style.display = 'block';
   moveTip(e);
 }
@@ -1167,16 +1254,14 @@ function moveTip(e){
   tip.style.top = (y + rect.height > window.innerHeight - 10 ? y - rect.height : y) + 'px';
 }
 function hideTip(){
-  document.getElementById('g-tip').style.display = 'none';
+  const tip = document.getElementById('g-tip');
+  tip.style.display = 'none';
+  tip.classList.remove('tl-tip--warn');
 }
 
 window.filterPhase = function(p){
   activePhase = (activePhase === p ? 0 : p);
-  // Highlight legend
-  [0,1,2,3].forEach(i => {
-    const el = document.getElementById('leg'+i);
-    if(el) el.style.opacity = (!activePhase || activePhase===i) ? '1' : '0.4';
-  });
+  syncLegendPills();
   buildRows();
 };
 
@@ -1207,7 +1292,7 @@ const observer = new MutationObserver(() => {
 });
 observer.observe(document.getElementById('deck'), {attributes:true, subtree:true, attributeFilter:['class']});
 
-// Initial build
+syncLegendPills();
 buildRows();
 })();
 </script>
