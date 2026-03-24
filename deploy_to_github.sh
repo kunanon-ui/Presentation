@@ -22,7 +22,11 @@ if [ ! -f "index.html" ] || [ ! -f "fando/index.html" ]; then
   echo "❌  Need index.html (hub) and fando/index.html (deck)."
   exit 1
 fi
-echo "✅  Found index.html + fando/index.html"
+if [ ! -f "tbh-ai-adoption/TBH_AI_Adoption_Strategy.html" ]; then
+  echo "❌  Need tbh-ai-adoption/TBH_AI_Adoption_Strategy.html"
+  exit 1
+fi
+echo "✅  Found index.html + fando/index.html + tbh-ai-adoption deck"
 
 # ── 2. Create repo via GitHub API (optional; skip if no token) ─
 if [ -n "$TOKEN" ]; then
@@ -59,17 +63,18 @@ echo ""
 echo "📤  Pushing site to $BRANCH branch ..."
 
 TMPDIR=$(mktemp -d)
-mkdir -p "$TMPDIR/fando"
+mkdir -p "$TMPDIR/fando" "$TMPDIR/tbh-ai-adoption"
 cp index.html "$TMPDIR/index.html"
 cp fando/index.html "$TMPDIR/fando/index.html"
+cp tbh-ai-adoption/TBH_AI_Adoption_Strategy.html "$TMPDIR/tbh-ai-adoption/index.html"
 cd "$TMPDIR"
 
 git init -q
 git checkout -q -b "$BRANCH"
 git config user.email "deploy@fando-ai-agent"
 git config user.name  "Fando Deploy"
-git add index.html fando/index.html
-git commit -q -m "chore: deploy presentation hub + Fando deck"
+git add index.html fando/index.html tbh-ai-adoption/index.html
+git commit -q -m "chore: deploy hub + Fando + TBH AI adoption decks"
 
 if [ -n "$TOKEN" ]; then
   REMOTE="https://$TOKEN@github.com/$USER/$REPO.git"
