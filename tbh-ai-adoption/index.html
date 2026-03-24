@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBH · AI Adoption Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens (fando palette) ───────────────── */
+:root {
+  --bg:        #ffffff;
+  --bg2:       #f7f5f0;
+  --bg3:       #edeae3;
+  --border:    #e2ddd6;
+  --border2:   #ccc8bf;
+  --text:      #1c1917;
+  --text2:     #44403c;
+  --muted:     #78716c;
+  --orange:    #ea580c;
+  --orange-lt: #fff4ee;
+  --teal:      #0d9669;
+  --teal-lt:   #ecfdf5;
+  --coral:     #dc2626;
+  --coral-lt:  #fef2f2;
+  --purple:    #6d28d9;
+  --purple-lt: #f5f3ff;
+  --blue:      #1d4ed8;
+  --blue-lt:   #eff6ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow:    0 4px 16px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.09), 0 4px 12px rgba(0,0,0,.05);
+}
+
+/* ── Reset (Fando deck) ──────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #bfbab3 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: .15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Deck shell ──────────────────────────────────── */
+#deck {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* ── Slides ──────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.4, 0, .2, 1), transform .45s cubic-bezier(.4, 0, .2, 1);
+  transform: translateY(20px);
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.slide > * { position: relative; z-index: 1; }
+
+/* ── Hero (cover) — matches Fando slide-hero ─────── */
+.slide-hero {
+  flex-direction: row;
+}
+.hero-left {
+  width: 40%;
+  background: var(--orange);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px 44px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.hero-left::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -80px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .07);
+}
+.hero-left::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -50px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .1);
+}
+.hero-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, .65);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.hero-left h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 4.5vw, 68px);
+  line-height: 1;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.hero-left h1 em { font-style: italic; opacity: .82; }
+.hero-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .55);
+  position: relative;
+  z-index: 1;
+  margin-top: 22px;
+  line-height: 1.5;
+}
+.hero-left .presentation-home-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-left .presentation-home-btn .phb-arrow {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: .65;
+}
+.hero-left .presentation-home-btn:hover {
+  color: var(--orange);
+  border-color: rgba(234, 88, 12, .35);
+  box-shadow: 0 2px 10px rgba(234, 88, 12, .1);
+}
+.hero-left .presentation-home-btn:hover .phb-arrow {
+  opacity: 1;
+  color: var(--orange);
+}
+.hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 48px;
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+  min-width: 0;
+}
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-bottom: 36px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 400px;
+}
+.stat-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-box .stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-box .stat-label {
+  font-size: 10.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 500;
+}
+.phase-strip-hero {
+  margin-top: 20px;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+@media (max-width: 900px) {
+  .slide-hero { flex-direction: column; }
+  .hero-left {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 36px 28px 28px;
+    min-height: auto;
+  }
+  .hero-left::before { width: 200px; height: 200px; top: -60px; left: -40px; }
+  .hero-left::after { width: 160px; height: 160px; bottom: -30px; right: -30px; }
+  .hero-right { padding: 28px 24px 100px; }
+  .stats-grid { max-width: 100%; }
+  .phase-strip-hero { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Animations ──────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide.active .au { animation: fadeUp .38s ease both; }
+.slide.active .au-1 { animation-delay: .04s; }
+.slide.active .au-2 { animation-delay: .10s; }
+.slide.active .au-3 { animation-delay: .16s; }
+.slide.active .au-4 { animation-delay: .22s; }
+.slide.active .au-5 { animation-delay: .28s; }
+.slide.active .au-6 { animation-delay: .34s; }
+.slide.active .au-7 { animation-delay: .40s; }
+
+/* ── Slide header bar (Fando slide-header style) ─── */
+.s-nav {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 48px 18px;
+  flex-shrink: 0;
+  background: transparent;
+  border-bottom: 1.5px solid var(--border);
+}
+.s-nav .brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.s-nav .tag {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  white-space: nowrap;
+  padding-bottom: 3px;
+}
+
+/* ── Body area ───────────────────────────────────── */
+.s-body {
+  flex: 1;
+  padding: 22px 48px 100px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.scrollable { overflow-y: auto; flex: 1; min-height: 0; }
+.scrollable::-webkit-scrollbar { width: 3px; }
+.scrollable::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── Typography ──────────────────────────────────── */
+.display {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  color: var(--text);
+  line-height: 1.1;
+}
+.h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.h2 .accent { color: var(--orange); }
+.label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.body-sm { font-size: 12px; color: var(--text2); line-height: 1.55; }
+.body-xs { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* ── Divider ─────────────────────────────────────── */
+.hr { height: 1px; background: var(--border); margin: 10px 0 14px; }
+
+/* ── Cards (Fando top accent bar) ───────────────── */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--border));
+  border-radius: 12px 12px 0 0;
+}
+.card-accent { --card-accent: var(--border2); }
+.card.a-orange { --card-accent: var(--orange); }
+.card.a-teal { --card-accent: var(--teal); }
+.card.a-coral { --card-accent: var(--coral); }
+.card.a-purple { --card-accent: var(--purple); }
+.card.a-blue { --card-accent: var(--blue); }
+
+/* ── Pills / badges ──────────────────────────────── */
+.pill {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+/* ── Tables ──────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+thead th {
+  padding: 7px 11px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: var(--bg3);
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 7px 11px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  line-height: 1.45;
+  font-size: 11.5px;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: var(--bg2); }
+
+/* ── Grid helpers ────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; }
+
+/* ── Phase number circle ─────────────────────────── */
+.p-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Stat boxes ──────────────────────────────────── */
+.stat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  border-left-width: 3px;
+}
+.stat .s-val { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); }
+.stat .s-lbl { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+
+/* ── Decision cards ──────────────────────────────── */
+.d-card {
+  flex: 1;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Bottom nav (Fando pill) ───────────────────── */
+#nav {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 500;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 8px 17px;
+  box-shadow: var(--shadow-lg);
+}
+#nav .nav-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  transition: all .15s;
+  line-height: 1;
+  font-family: 'DM Sans', sans-serif;
+}
+#nav .nav-btn:hover {
+  color: var(--text);
+  background: var(--bg2);
+}
+#nav .nav-btn:disabled { opacity: .35; cursor: default; }
+#slide-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  min-width: 44px;
+  text-align: center;
+}
+#dots { display: flex; gap: 5px; align-items: center; }
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border2);
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  padding: 0;
+}
+.dot.active {
+  width: 17px;
+  border-radius: 3px;
+  background: var(--orange);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--orange);
+  transition: width .4s ease;
+  z-index: 600;
+  border-radius: 0 2px 2px 0;
+}
+
+.deck-meta {
+  position: fixed;
+  top: 44px;
+  right: 48px;
+  z-index: 400;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: .12em;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  #nav { bottom: 16px; padding: 7px 14px; gap: 10px; }
+  .dot { width: 4px; height: 4px; }
+  .dot.active { width: 14px; }
+  .deck-meta { display: none; }
+  .s-nav { padding: 24px 20px 14px; flex-wrap: wrap; }
+  .s-body { padding: 18px 20px 96px; }
+}
+
+/* ── Info row ────────────────────────────────────── */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.info-row .ir-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Output row cards ────────────────────────────── */
+.out-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.out-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="deck-meta" id="deck-meta">01 / 10</div>
+<div id="deck">
+
+<!-- ════════════════════════════════════════════════
+  S1 — COVER (Fando-style hero)
+════════════════════════════════════════════════ -->
+<div class="slide slide-hero active" id="s0">
+  <div class="hero-left">
+    <a class="presentation-home-btn" href="../" aria-label="Back to presentations home"><span class="phb-arrow" aria-hidden="true">←</span> Presentation</a>
+    <div class="hero-tag">The Binary Holdings · March 2026 · Confidential</div>
+    <h1>TBH Office<br><em>AI</em><br>Plan</h1>
+    <div class="hero-desc">AI Adoption Strategy — <strong>four phases, 2 weeks each</strong> (8-week core),<br>then scale from week 7. Discover how teams use AI, standardise tools, and measure impact.</div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-sub au au-1">Survey-led rollout: <strong>2 weeks per phase</strong> through pilots (weeks 1–6), rollout from week 7, then a quarterly improvement loop.</p>
+    <div class="stats-grid au au-2">
+      <div class="stat-box"><div class="stat-val">4</div><div class="stat-label">Phases</div></div>
+      <div class="stat-box"><div class="stat-val">8</div><div class="stat-label">Weeks (4×2) to pilot gate</div></div>
+      <div class="stat-box"><div class="stat-val">15</div><div class="stat-label">Survey questions</div></div>
+      <div class="stat-box"><div class="stat-val">∞</div><div class="stat-label">Continuous improvement</div></div>
+    </div>
+    <div class="phase-strip-hero g4 au au-3">
+      <div style="background:var(--teal); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 1 · Wk 1–2</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Survey &amp; Discover</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
+      </div>
+      <div style="background:var(--orange); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 2 · Wk 3–4</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Design Solutions</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
+      </div>
+      <div style="background:var(--purple); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 3 · Wk 5–6</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Test &amp; Measure</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
+      </div>
+      <div style="background:var(--blue); padding:12px 14px;">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 4 · Wk 7+</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Improve &amp; Scale</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">From week 7 · ongoing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S2 — EXECUTIVE SUMMARY
+════════════════════════════════════════════════ -->
+<div class="slide" id="s1">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Executive Summary</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label">Overview</div>
+      <div class="h2" style="margin-bottom:10px;">Why This Plan, Why Now</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Cadence: <strong>2 weeks per phase</strong> for Phases 1–3 (weeks 1–6), Go/No-Go end of week 6, Phase 4 from week 7+.</div>
+    </div>
+    <div class="hr au au-2"></div>
+
+    <div class="g2 au au-3" style="flex:1; align-items:start;">
+      <div>
+        <table>
+          <thead><tr><th>Guiding Principle</th><th>Rationale</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500; color:var(--teal);">Listen before building</span></td>
+              <td>Survey data drives every tool decision. No assumptions.</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500; color:var(--orange);">Right tool, right job</span></td>
+              <td>n8n/Make for routine tasks. Claude/ChatGPT for knowledge work. Don't mix.</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500; color:var(--teal);">Employee-led adoption</span></td>
+              <td>People adopt tools they helped choose. Surveys give staff a real voice.</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500; color:var(--orange);">Measure everything</span></td>
+              <td>Baseline captured before rollout. Impact proven with data, not perception.</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500; color:var(--teal);">Improve continuously</span></td>
+              <td>Phase 4 is not the end — every cycle feeds the next sprint.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:9px;">
+        <div class="card a-coral">
+          <div class="label" style="color:var(--coral);">The Problem</div>
+          <div class="body-sm">Scattered AI usage, no governance, shadow IT spend, inconsistent output quality, no baseline to measure against.</div>
+        </div>
+        <div class="card a-teal">
+          <div class="label" style="color:var(--teal);">The Outcome</div>
+          <div class="body-sm">One standardised toolset per task type, measurable productivity gains, employee confidence up, and a quarterly improvement loop.</div>
+        </div>
+        <div class="card" style="background:var(--bg2);">
+          <div class="label">Timeline</div>
+          <div class="body-sm">8-week structured rollout (2 weeks per phase) → ongoing quarterly improvement cycle from Week 7+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S3 — PHASE 1: SURVEY & DISCOVER
+════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 1 · Weeks 1–2</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="p-num" style="background:var(--teal-lt); color:var(--teal); border:1.5px solid #a7f3d0;">1</div>
+      <div>
+        <div class="label" style="color:var(--teal); margin-bottom:2px;">Phase 1</div>
+        <div class="h2">Survey &amp; Discover</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 1–2 · Survey, synthesis &amp; option split</div>
+      </div>
+      <div class="info-row au au-2" style="margin:0 0 0 auto; flex-shrink:0;">
+        <span class="ir-item">📅 2-week phase</span>
+        <span class="ir-item">📋 15 questions</span>
+        <span class="ir-item">⏱ 10–15 min</span>
+        <span class="ir-item">📣 Slack &amp; Email</span>
+      </div>
+    </div>
+
+    <div class="g2 au au-3" style="flex:1; align-items:start; gap:14px;">
+      <div>
+        <div class="label" style="margin-bottom:8px;">4 Survey Topics</div>
+        <table>
+          <thead><tr><th>Topic</th><th>Qs</th><th>Reveals</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:500; color:var(--text);">Current AI Tool Usage</td>
+              <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Q1–Q4</span></td>
+              <td>Tool landscape, frequency, shadow IT</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500; color:var(--text);">What They Use AI For</td>
+              <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Q5–Q8</span></td>
+              <td>Use-case taxonomy, unmet demand</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500; color:var(--text);">Task &amp; Workflow Patterns</td>
+              <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Q9–Q12</span></td>
+              <td>Repetitive task %, automation candidates</td>
+            </tr>
+            <tr>
+              <td style="font-weight:500; color:var(--text);">Readiness &amp; Sensitivity</td>
+              <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Q13–Q15</span></td>
+              <td>Confidence baseline, sensitivity flags</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:8px;">Phase 1 → Phase 2 Outputs</div>
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <div class="out-card au au-4">
+            <div class="out-icon" style="background:var(--teal-lt);">📊</div>
+            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">AI Tool Landscape Report</div><div class="body-xs">Current tools, frequency, shadow IT, rogue spend</div></div>
+          </div>
+          <div class="out-card au au-5">
+            <div class="out-icon" style="background:var(--orange-lt);">🗂️</div>
+            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">Use-Case Taxonomy</div><div class="body-xs">Ranked list of tasks by team — direct input to tool selection</div></div>
+          </div>
+          <div class="out-card au au-6">
+            <div class="out-icon" style="background:var(--purple-lt);">⚙️</div>
+            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">Automation Opportunity Map</div><div class="body-xs">High-repeatability tasks mapped to tooling gaps</div></div>
+          </div>
+          <div class="out-card au au-7">
+            <div class="out-icon" style="background:var(--blue-lt);">✅</div>
+            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">Recommended AI Option Split</div><div class="body-xs">Which tasks → automation vs. LLM vs. coding</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S4 — PHASE 2: TWO-OPTION ARCHITECTURE
+════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 2 · Weeks 3–4</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="p-num" style="background:var(--orange-lt); color:var(--orange); border:1.5px solid #fdba74;">2</div>
+      <div>
+        <div class="label" style="color:var(--orange); margin-bottom:2px;">Phase 2</div>
+        <div class="h2">Two-Option AI Architecture</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 3–4 · Architecture &amp; tool direction</div>
+      </div>
+      <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
+        Separation of concerns
+      </div>
+    </div>
+
+    <div class="au au-2" style="margin-bottom:11px;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%;"></th>
+            <th style="color:var(--orange);">⚙️ Option 1 — Workflow Automation</th>
+            <th>🧠 Option 2 — LLM AI &amp; Coding</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Tools</td><td><strong>n8n</strong> (self-hosted) or <strong>Make</strong> (cloud)</td><td><strong>Claude / Cowork</strong>, ChatGPT Teams, <strong>Claude Code</strong> (devs)</td></tr>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Task type</td><td>Repetitive, rule-based, same steps with different data</td><td>Writing, reasoning, analysis, code — requires judgement</td></tr>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Who uses</td><td>Employees self-serve via visual builder. No dev required.</td><td>All staff via chat (Cowork). Dev team uses Claude Code via CLI.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="g3 au au-3">
+      <div class="card a-teal">
+        <div class="label" style="color:var(--teal);">Claude / Cowork</div>
+        <div class="body-sm" style="margin-bottom:4px; font-weight:500; color:var(--text);">All employees</div>
+        <div class="body-xs">Chat-based writing, analysis, presentations &amp; file management. No code required.</div>
+      </div>
+      <div class="card a-orange">
+        <div class="label" style="color:var(--orange);">ChatGPT Teams</div>
+        <div class="body-sm" style="margin-bottom:4px; font-weight:500; color:var(--text);">All employees (secondary)</div>
+        <div class="body-xs">DALL·E image gen, Advanced Data Analysis. Kept as alternative alongside Claude.</div>
+      </div>
+      <div class="card a-purple">
+        <div class="label" style="color:var(--purple);">Claude Code</div>
+        <div class="body-sm" style="margin-bottom:4px; font-weight:500; color:var(--text);">Engineering / Tech roles</div>
+        <div class="body-xs">CLI agentic coding — write, review, debug &amp; document code from terminal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S5 — PHASE 2: OPTION 1 DETAIL
+════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 2 · Weeks 3–4 · Option 1 tools</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label" style="color:var(--orange);">Option 1 — Workflow Automation</div>
+      <div class="h2" style="margin-bottom:10px;">n8n vs Make</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Phase 2 window: weeks 3–4 (2-week sprint)</div>
+    </div>
+    <div class="hr au au-2"></div>
+
+    <div class="g2 au au-3" style="flex:1; align-items:start; gap:14px;">
+      <div>
+        <table>
+          <thead>
+            <tr><th style="width:28%;">Criteria</th><th style="color:var(--orange);">n8n</th><th>Make</th></tr>
+          </thead>
+          <tbody>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px;">Deployment</td><td>Self-hosted. Full data control.</td><td>Cloud SaaS. Fastest to start.</td></tr>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px;">Cost</td><td>Free self-hosted. ~$20/mo cloud.</td><td>Free tier + ~$9/mo paid.</td></tr>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px;">Usability</td><td>Powerful, slight learning curve.</td><td>Most intuitive — best for non-tech.</td></tr>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px;">Integrations</td><td>500+. Custom via HTTP.</td><td>1,500+. Broadest library.</td></tr>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px;">Data safety</td><td style="color:var(--teal); font-weight:500;">✓ Stays on your server</td><td style="color:var(--orange); font-weight:500;">⚠ Passes through Make cloud</td></tr>
+            <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--orange);">Pick if…</td><td>Data sensitivity is a concern</td><td>Fast rollout for non-tech teams</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:8px;">Employee Self-Service Model</div>
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <div class="card au au-4">
+            <div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:3px;">📚 Starter Template Library</div>
+            <div class="body-xs">10–15 pre-built workflows from Phase 1 findings. Deploy and customise — no coding.</div>
+          </div>
+          <div class="card au au-5">
+            <div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:3px;">👩‍🏫 2-Hour Workshop Per Team</div>
+            <div class="body-xs">"Build Your First Workflow" — hands-on, no technical background required.</div>
+          </div>
+          <div class="card au au-6">
+            <div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:3px;">🏆 Workflow Champion Per Team</div>
+            <div class="body-xs">Peer support &amp; template sharing. Engineering owns platform — teams own their workflows.</div>
+          </div>
+          <div class="card au au-7" style="background:var(--bg2);">
+            <div class="label" style="margin-bottom:4px;">Top Template Examples</div>
+            <div class="body-xs" style="line-height:1.7;">Weekly report compiler · Meeting notes → Notion tasks · New lead Slack alert · Invoice due alert · Onboarding task sequence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S6 — PHASE 2: DECISION FRAMEWORK
+════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 2 · Weeks 3–4 · Decision Framework</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label">Quick-reference guide · Share with all employees during onboarding</div>
+      <div class="h2" style="margin-bottom:10px;">Which Tool for Which Task?</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Phase 2 window: weeks 3–4 (2-week sprint)</div>
+    </div>
+    <div class="hr au au-2"></div>
+
+    <div class="scrollable au au-3">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:42%;">Task Type</th>
+            <th style="width:19%; text-align:center; color:var(--orange);">n8n / Make</th>
+            <th style="width:20%; text-align:center; color:var(--teal);">Claude / ChatGPT</th>
+            <th style="width:19%; text-align:center; color:var(--purple);">Claude Code</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Same steps, different data every time</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+          </tr>
+          <tr>
+            <td>Move data between apps (Sheets → Notion)</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Possible</span></td>
+          </tr>
+          <tr>
+            <td>Timed or triggered notifications</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+          </tr>
+          <tr>
+            <td>Write, summarise, or rewrite text</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Possible</span></td>
+          </tr>
+          <tr>
+            <td>Analyse data or generate insights</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Possible</span></td>
+          </tr>
+          <tr>
+            <td>Create presentations or documents</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Cowork</span></td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+          </tr>
+          <tr>
+            <td>Write, review, or debug code</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Basic</span></td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+          </tr>
+          <tr>
+            <td>Research a topic</td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+            <td style="text-align:center;"><span class="pill" style="background:var(--teal-lt); color:var(--teal);">✓ Best fit</span></td>
+            <td style="text-align:center; color:var(--muted);">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S7 — PHASE 3: PILOT STRUCTURE + METRICS
+════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 3 · Weeks 5–6</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="p-num" style="background:var(--purple-lt); color:var(--purple); border:1.5px solid #c4b5fd;">3</div>
+      <div>
+        <div class="label" style="color:var(--purple); margin-bottom:2px;">Phase 3</div>
+        <div class="h2">Test &amp; Measure</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 5–6 · Pilots + Go/No-Go at end of week 6</div>
+      </div>
+      <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
+        Impact proven with data, not perception
+      </div>
+    </div>
+
+    <div class="au au-2" style="margin-bottom:10px;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:16%;"></th>
+            <th style="color:var(--orange);">⚙️ Option 1: Automation Pilot (Wk 5)</th>
+            <th style="color:var(--purple);">🧠 Option 2: LLM AI Pilot (Wk 6)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Teams</td><td>Ops + Finance (highest repetitive volume)</td><td>All teams (Product + Growth first, then Eng + Finance)</td></tr>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Setup</td><td>Engineering deploys. Ops runs 2-hr workshop. Top 3 templates.</td><td>IT provisions accounts. 1-hr role-specific onboarding.</td></tr>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">Success</td><td>≥1 workflow running autonomously with measurable time saving</td><td>≥60% of participants using tool 3+ times/week by end of Wk 6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="label au au-3" style="margin-bottom:7px;">Key Success Thresholds</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:7px;" class="au au-4">
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Repetitive task time</div>
+        <div class="s-val" style="color:var(--teal);">≥30% reduction</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Content creation time</div>
+        <div class="s-val" style="color:var(--teal);">≥25% reduction</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Manual workflow steps</div>
+        <div class="s-val" style="color:var(--teal);">≥50% eliminated</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">AI confidence score (1–5)</div>
+        <div class="s-val" style="color:var(--teal);">Average ≥3.5</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Standardised tool adoption</div>
+        <div class="s-val" style="color:var(--teal);">≥80% of team</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Time to standard output</div>
+        <div class="s-val" style="color:var(--teal);">≥40% faster</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S8 — PHASE 3: GO / NO-GO
+════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 3 · Week 6 Decision Gate</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label" style="color:var(--purple);">Go / No-Go Decision Gate</div>
+      <div class="h2" style="margin-bottom:10px;">Review pilot data at end of Week 6</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:4px;">Closes the 2-week Phase 3 window (weeks 5–6) before Phase 4 rollout.</div>
+    </div>
+    <div class="hr au au-2"></div>
+
+    <div style="display:flex; gap:12px; margin-bottom:14px;" class="au au-3">
+      <div class="d-card" style="background:var(--teal-lt); border-color:#a7f3d0; border-top:3px solid var(--teal);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--teal); margin-bottom:6px; text-transform:uppercase;">✓ Go</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">≥4 of 7 metrics hit threshold</div>
+        <div class="body-xs">Proceed to company-wide rollout at Phase 4. Lock in tool subscriptions and comms plan.</div>
+      </div>
+      <div class="d-card" style="background:var(--orange-lt); border-color:#fdba74; border-top:3px solid var(--orange);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--orange); margin-bottom:6px; text-transform:uppercase;">⚠ Conditional</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">2–3 metrics hit threshold</div>
+        <div class="body-xs">Extend pilot 2 weeks. Fix specific blockers — training gap, workflow config, or tool selection. Re-measure.</div>
+      </div>
+      <div class="d-card" style="background:var(--coral-lt); border-color:#fca5a5; border-top:3px solid var(--coral);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--coral); margin-bottom:6px; text-transform:uppercase;">✗ No-Go</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">Fewer than 2 metrics</div>
+        <div class="body-xs">Return to Phase 2. Re-evaluate tool selection, re-run onboarding. Investigate root cause before re-piloting.</div>
+      </div>
+    </div>
+
+    <div class="card au au-4" style="background:var(--bg2);">
+      <div class="label" style="margin-bottom:8px;">Phase 3 → Phase 4 Handoff Checklist</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+        <div class="body-xs">☐ Go/No-Go decision documented with data</div>
+        <div class="body-xs">☐ Tool subscriptions confirmed (if Go)</div>
+        <div class="body-xs">☐ Pilot learnings converted to backlog items</div>
+        <div class="body-xs">☐ Phase 4 improvement survey designed &amp; ready</div>
+        <div class="body-xs">☐ Workflow + AI Champions confirmed per team</div>
+        <div class="body-xs">☐ Company-wide rollout comms drafted</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S9 — PHASE 4: IMPROVE & SCALE
+════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Phase 4 · Week 7+</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="p-num" style="background:var(--blue-lt); color:var(--blue); border:1.5px solid #93c5fd;">4</div>
+      <div>
+        <div class="label" style="color:var(--blue); margin-bottom:2px;">Phase 4</div>
+        <div class="h2">Improve &amp; Scale</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">From week 7 onward · Rollout + quarterly improvement (ongoing)</div>
+      </div>
+      <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
+        Quarterly operating rhythm — not a one-time step
+      </div>
+    </div>
+
+    <div class="g2 au au-2" style="flex:1; align-items:start; gap:14px;">
+      <div>
+        <div class="label" style="margin-bottom:7px;">Post-Implementation Survey (10 Qs)</div>
+        <table>
+          <thead><tr><th>Key Questions</th><th style="width:34%;">Compares To</th></tr></thead>
+          <tbody>
+            <tr><td>Which TBH AI tools do you now use regularly?</td><td><span class="pill" style="background:var(--bg3); color:var(--muted);">P1 Q1 — adoption rate</span></td></tr>
+            <tr><td>How satisfied with TBH-provided tools? (1–5)</td><td><span class="pill" style="background:var(--bg3); color:var(--muted);">P1 Q6 — satisfaction Δ</span></td></tr>
+            <tr><td>Tasks completed faster or better with AI?</td><td><span class="pill" style="background:var(--bg3); color:var(--muted);">P1 Q7 — unmet demand</span></td></tr>
+            <tr><td>What is not working / where do tools fall short?</td><td><span class="pill" style="background:var(--orange-lt); color:var(--orange);">→ Improvement backlog</span></td></tr>
+            <tr><td>AI confidence score now? (1–5)</td><td><span class="pill" style="background:var(--bg3); color:var(--muted);">P1 Q13 — training Δ</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:7px;">Quarterly Improvement Cycle</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; gap:10px; align-items:center; background:var(--teal-lt); border-radius:8px; padding:8px 11px; border:1px solid #a7f3d0;" class="au au-3">
+            <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--teal); width:16px; flex-shrink:0;">01</span>
+            <span class="body-xs" style="color:var(--text2);">Deploy 10-question survey — min 80% response target</span>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; background:var(--bg2); border-radius:8px; padding:8px 11px; border:1px solid var(--border);" class="au au-4">
+            <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--muted); width:16px; flex-shrink:0;">02</span>
+            <span class="body-xs">Compare metrics vs. previous quarter. Top 3 wins + top 3 pain points.</span>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; background:var(--orange-lt); border-radius:8px; padding:8px 11px; border:1px solid #fdba74;" class="au au-5">
+            <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--orange); width:16px; flex-shrink:0;">03</span>
+            <span class="body-xs" style="color:var(--text2);">Build improvement backlog — rank by impact × effort, assign owner + date.</span>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; background:var(--bg2); border-radius:8px; padding:8px 11px; border:1px solid var(--border);" class="au au-6">
+            <span style="font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--muted); width:16px; flex-shrink:0;">04</span>
+            <span class="body-xs">Implement. Share <em>"You said, we did"</em> summary with the team.</span>
+          </div>
+        </div>
+        <div class="card au au-7" style="background:var(--bg2); margin-top:8px;">
+          <div class="label" style="margin-bottom:4px;">Governance</div>
+          <div class="body-xs" style="line-height:1.7;">AI Lead (Fronk) · Ops Lead (backlog) · Engineering (platform) · Workflow &amp; AI Champions (×1/team) · Quarterly AI Review (leadership)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+  S10 — MASTER TIMELINE
+════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="s-nav">
+    <span class="brand">TBH · AI Adoption Strategy</span>
+    <span class="tag">Overall Timeline</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label">8-Week Programme (2 Weeks per Phase) + Ongoing Quarterly Cycle</div>
+      <div class="h2" style="margin-bottom:10px;">Overall Timeline</div>
+    </div>
+    <div class="hr au au-2"></div>
+
+    <!-- Phase bar -->
+    <div class="g4 au au-3" style="border-radius:10px; overflow:hidden; border:1px solid var(--border); margin-bottom:14px; box-shadow:var(--shadow-sm);">
+      <div style="background:var(--teal); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 1</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Survey &amp; Discover</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 1–2 · 2 wk</div>
+      </div>
+      <div style="background:var(--orange); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 2</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Design Solutions</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 3–4 · 2 wk</div>
+      </div>
+      <div style="background:var(--purple); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 3</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Test &amp; Measure</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 5–6 · 2 wk</div>
+      </div>
+      <div style="background:var(--blue); padding:10px 14px;">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 4</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Improve &amp; Scale</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Week 7+ · ongoing</div>
+      </div>
+    </div>
+
+    <div class="au au-4">
+      <table>
+        <thead>
+          <tr><th style="width:10%;">Phase</th><th style="width:10%;">Weeks</th><th>Key Milestones</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Phase 1</span></td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--teal);">1–2</td>
+            <td>Wk 1: Survey launched + responses in → Wk 2: AI landscape report drafted + tool option split presented to leadership</td>
+          </tr>
+          <tr>
+            <td><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Phase 2</span></td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--orange);">3–4</td>
+            <td>Wk 3: Tool selection confirmed + template library built → Wk 4: Platform deployed, accounts provisioned + decision framework ready</td>
+          </tr>
+          <tr>
+            <td><span class="pill" style="background:var(--purple-lt); color:var(--purple);">Phase 3</span></td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">5–6</td>
+            <td>Wk 5: Baseline captured + Option 1 pilot → Wk 6: Option 2 pilot (all teams) + post-pilot Go/No-Go decision</td>
+          </tr>
+          <tr>
+            <td><span class="pill" style="background:var(--blue-lt); color:var(--blue);">Phase 4</span></td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--blue);">7+</td>
+            <td>Wk 7: Full rollout begins → first post-implementation survey in Q1 → improvement backlog with leadership → Ongoing: Quarterly loop</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:10px; text-align:center;" class="au au-5">
+      <span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.08em;">The Binary Holdings &nbsp;·&nbsp; AI Adoption Strategy &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Confidential</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- #deck -->
+
+<!-- ── Nav ──────────────────────────────────────── -->
+<div id="nav">
+  <button type="button" class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+  <div id="dots"></div>
+  <span id="slide-counter">1 / 10</span>
+  <button type="button" class="nav-btn" id="btn-next" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let current  = 0;
+
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+    var dm = document.getElementById('deck-meta');
+    if (dm) dm.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  navigate(-1);
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End')  goTo(total - 1);
+  });
+
+  document.getElementById('progress').style.width = (1 / total * 100) + '%';
+  var dm0 = document.getElementById('deck-meta');
+  if (dm0) dm0.textContent = '01 / ' + String(total).padStart(2, '0');
+</script>
+</body>
+</html>
