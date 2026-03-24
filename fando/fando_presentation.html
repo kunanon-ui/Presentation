@@ -1125,8 +1125,12 @@ code{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--bg3);padd
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:8px;height:8px;border-radius:50%;background:#ea580c;border:2px solid #fff;box-shadow:0 0 0 1.5px #ea580c"></div>
-        <span style="font-size:11px;color:var(--muted)">= milestone / decision</span>
+        <div style="width:8px;height:8px;border-radius:50%;background:#ea580c;border:2px solid #fff;box-shadow:0 0 0 1.5px #ea580c" title="Milestone"></div>
+        <span style="font-size:11px;color:var(--muted)">= milestone</span>
+        <span style="font-size:11px;color:var(--muted)">/</span>
+        <span class="g-decision-legend" title="Decision required" aria-label="Decision required">
+          <svg class="g-decision-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v5"/><path d="M12 12 8 17M12 12l4 5"/><circle cx="8" cy="19" r="2"/><circle cx="16" cy="19" r="2"/></svg>
+        </span>
       </div>
     </div>
 
@@ -1189,10 +1193,16 @@ code{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--bg3);padd
 .g-task-label.warn{color:#ea580c}
 .g-wk.active-col{background:rgba(234,88,12,.06)}
 .g-row-data.active-col-row .g-cell:nth-child(var(--aw)){background:rgba(234,88,12,.04)}
+.g-decision-svg{display:block;color:#78716c}
+.g-decision-legend{display:inline-flex;align-items:center;color:#78716c;vertical-align:middle}
+#g-tip .g-decision-svg{color:#ea580c}
 </style>
 
 <script>
 (function(){
+/** Inline SVG: fork / decision point (used in tooltip + legend) */
+const DECISION_ICON_HTML = '<svg class="g-decision-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M12 7v5"/><path d="M12 12 8 17M12 12l4 5"/><circle cx="8" cy="19" r="2"/><circle cx="16" cy="19" r="2"/></svg>';
+
 const ROWS = [
   {label:'GCP setup + infra',    phase:1, tip:'Create service account · enable 5 APIs · GCS bucket ai-auto-fando · IAM roles assigned',
    bars:[{cols:'1',cls:'g-bar-p1',text:'GCP · SA · APIs'}]},
@@ -1293,7 +1303,9 @@ function buildRows(){
 
 function showTip(e, text, warn){
   const tip = document.getElementById('g-tip');
-  tip.innerHTML = warn ? '<span style="color:#ea580c;font-weight:600">⚠ Decision required</span><br>' + text.replace('⚠ ','') : text;
+  tip.innerHTML = warn
+    ? '<span style="display:inline-flex;align-items:center;margin-bottom:4px" role="img" aria-label="Decision required">' + DECISION_ICON_HTML + '</span><br>' + text.replace(/^⚠\s*/, '')
+    : text;
   tip.style.display = 'block';
   moveTip(e);
 }
