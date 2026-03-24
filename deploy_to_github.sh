@@ -12,18 +12,17 @@ TOKEN="${GITHUB_TOKEN:-}"
 USER="kunanon-ui"
 REPO="Presentation"
 BRANCH="gh-pages"
-FILE="index.html"
 
 echo ""
-echo "🚀  Fando AI Agent — GitHub Pages deploy"
+echo "🚀  Presentation site — GitHub Pages deploy"
 echo "──────────────────────────────────────────"
 
-# ── 1. Check the HTML file exists ──────────────────────────────
-if [ ! -f "$FILE" ]; then
-  echo "❌  $FILE not found in current directory."
+# ── 1. Check site files exist ───────────────────────────────────
+if [ ! -f "index.html" ] || [ ! -f "fando/index.html" ]; then
+  echo "❌  Need index.html (hub) and fando/index.html (deck)."
   exit 1
 fi
-echo "✅  Found $FILE"
+echo "✅  Found index.html + fando/index.html"
 
 # ── 2. Create repo via GitHub API (optional; skip if no token) ─
 if [ -n "$TOKEN" ]; then
@@ -57,18 +56,20 @@ fi
 
 # ── 3. Init local git and push ──────────────────────────────────
 echo ""
-echo "📤  Pushing $FILE to $BRANCH branch ..."
+echo "📤  Pushing site to $BRANCH branch ..."
 
 TMPDIR=$(mktemp -d)
-cp "$FILE" "$TMPDIR/index.html"
+mkdir -p "$TMPDIR/fando"
+cp index.html "$TMPDIR/index.html"
+cp fando/index.html "$TMPDIR/fando/index.html"
 cd "$TMPDIR"
 
 git init -q
 git checkout -q -b "$BRANCH"
 git config user.email "deploy@fando-ai-agent"
 git config user.name  "Fando Deploy"
-git add index.html
-git commit -q -m "chore: deploy Fando AI Agent presentation"
+git add index.html fando/index.html
+git commit -q -m "chore: deploy presentation hub + Fando deck"
 
 if [ -n "$TOKEN" ]; then
   REMOTE="https://$TOKEN@github.com/$USER/$REPO.git"
