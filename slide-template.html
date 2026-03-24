@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TBH Slide Template · [DECK TITLE]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TBH slide template — CSS aligned with TBH_AI_Adoption_Strategy.html ───────────────── */
+:root {
+  --bg:        #ffffff;
+  --bg2:       #f7f5f0;
+  --bg3:       #edeae3;
+  --border:    #e2ddd6;
+  --border2:   #ccc8bf;
+  --text:      #1c1917;
+  --text2:     #44403c;
+  --muted:     #78716c;
+  --orange:    #ea580c;
+  --orange-lt: #fff4ee;
+  --teal:      #0d9669;
+  --teal-lt:   #ecfdf5;
+  --coral:     #dc2626;
+  --coral-lt:  #fef2f2;
+  --purple:    #6d28d9;
+  --purple-lt: #f5f3ff;
+  --blue:      #1d4ed8;
+  --blue-lt:   #eff6ff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow:    0 4px 16px rgba(0,0,0,.07), 0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.09), 0 4px 12px rgba(0,0,0,.05);
+}
+
+/* ── Reset ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #bfbab3 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: .15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Deck shell ──────────────────────────────────── */
+#deck {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* ── Slides ──────────────────────────────────────── */
+.slide {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.4, 0, .2, 1), transform .45s cubic-bezier(.4, 0, .2, 1);
+  transform: translateY(20px);
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.slide > * { position: relative; z-index: 1; }
+
+/* ── Hero (cover) ────────────────────────────────── */
+.slide-hero {
+  flex-direction: row;
+}
+.hero-left {
+  width: 40%;
+  background: var(--orange);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px 44px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.hero-left::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: -80px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .07);
+}
+.hero-left::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -50px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .1);
+}
+.hero-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, .65);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+.hero-left h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 4.5vw, 68px);
+  line-height: 1;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.hero-left h1 em { font-style: italic; opacity: .82; }
+.hero-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, .55);
+  position: relative;
+  z-index: 1;
+  margin-top: 22px;
+  line-height: 1.5;
+}
+.hero-left .presentation-home-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--text);
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-left .presentation-home-btn .phb-arrow {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: .65;
+}
+.hero-left .presentation-home-btn:hover {
+  color: var(--orange);
+  border-color: rgba(234, 88, 12, .35);
+  box-shadow: 0 2px 10px rgba(234, 88, 12, .1);
+}
+.hero-left .presentation-home-btn:hover .phb-arrow {
+  opacity: 1;
+  color: var(--orange);
+}
+.hero-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 48px;
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+  min-width: 0;
+}
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-bottom: 36px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 400px;
+}
+.stat-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-box .stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-box .stat-label {
+  font-size: 10.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 500;
+}
+.phase-strip-hero {
+  margin-top: 20px;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+@media (max-width: 900px) {
+  .slide-hero { flex-direction: column; }
+  .hero-left {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 36px 28px 28px;
+    min-height: auto;
+  }
+  .hero-left::before { width: 200px; height: 200px; top: -60px; left: -40px; }
+  .hero-left::after { width: 160px; height: 160px; bottom: -30px; right: -30px; }
+  .hero-right { padding: 28px 24px 100px; }
+  .stats-grid { max-width: 100%; }
+  .phase-strip-hero { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Animations ──────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide.active .au { animation: fadeUp .38s ease both; }
+.slide.active .au-1 { animation-delay: .04s; }
+.slide.active .au-2 { animation-delay: .10s; }
+.slide.active .au-3 { animation-delay: .16s; }
+.slide.active .au-4 { animation-delay: .22s; }
+.slide.active .au-5 { animation-delay: .28s; }
+.slide.active .au-6 { animation-delay: .34s; }
+.slide.active .au-7 { animation-delay: .40s; }
+
+/* ── Slide header bar ─────────────────────────────── */
+.s-nav {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 48px 18px;
+  flex-shrink: 0;
+  background: transparent;
+  border-bottom: 1.5px solid var(--border);
+}
+.s-nav .brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.s-nav .tag {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  white-space: nowrap;
+  padding-bottom: 3px;
+}
+
+/* ── Body area ───────────────────────────────────── */
+.s-body {
+  flex: 1;
+  padding: 22px 48px 100px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.scrollable { overflow-y: auto; flex: 1; min-height: 0; }
+.scrollable::-webkit-scrollbar { width: 3px; }
+.scrollable::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── Typography ──────────────────────────────────── */
+.display {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  color: var(--text);
+  line-height: 1.1;
+}
+.h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.h2 .accent { color: var(--orange); }
+.label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.body-sm { font-size: 12px; color: var(--text2); line-height: 1.55; }
+.body-xs { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* ── Divider ─────────────────────────────────────── */
+.hr { height: 1px; background: var(--border); margin: 10px 0 14px; }
+
+/* ── Cards (top accent via ::before) ─────────────── */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--border));
+  border-radius: 12px 12px 0 0;
+}
+.card-accent { --card-accent: var(--border2); }
+.card.a-orange { --card-accent: var(--orange); }
+.card.a-teal { --card-accent: var(--teal); }
+.card.a-coral { --card-accent: var(--coral); }
+.card.a-purple { --card-accent: var(--purple); }
+.card.a-blue { --card-accent: var(--blue); }
+
+/* ── Pills / badges ──────────────────────────────── */
+.pill {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+/* ── Tables ──────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+thead th {
+  padding: 7px 11px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: var(--bg3);
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+}
+tbody td {
+  padding: 7px 11px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  line-height: 1.45;
+  font-size: 11.5px;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) td { background: var(--bg2); }
+
+/* ── Grid helpers ────────────────────────────────── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; }
+
+/* ── Phase number circle ─────────────────────────── */
+.p-num {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Stat boxes ──────────────────────────────────── */
+.stat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  border-left-width: 3px;
+}
+.stat .s-val { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); }
+.stat .s-lbl { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+
+/* ── Decision cards ──────────────────────────────── */
+.d-card {
+  flex: 1;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Bottom nav (pill) ──────────────────────────── */
+#nav {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 500;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 8px 17px;
+  box-shadow: var(--shadow-lg);
+}
+#nav .nav-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  transition: all .15s;
+  line-height: 1;
+  font-family: 'DM Sans', sans-serif;
+}
+#nav .nav-btn:hover {
+  color: var(--text);
+  background: var(--bg2);
+}
+#nav .nav-btn:disabled { opacity: .35; cursor: default; }
+#slide-counter {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  min-width: 44px;
+  text-align: center;
+}
+#dots { display: flex; gap: 5px; align-items: center; }
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border2);
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+  padding: 0;
+}
+.dot.active {
+  width: 17px;
+  border-radius: 3px;
+  background: var(--orange);
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--orange);
+  transition: width .4s ease;
+  z-index: 600;
+  border-radius: 0 2px 2px 0;
+}
+
+.deck-meta {
+  position: fixed;
+  top: 44px;
+  right: 48px;
+  z-index: 400;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--orange);
+  letter-spacing: .12em;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  #nav { bottom: 16px; padding: 7px 14px; gap: 10px; }
+  .dot { width: 4px; height: 4px; }
+  .dot.active { width: 14px; }
+  .deck-meta { display: none; }
+  .s-nav { padding: 24px 20px 14px; flex-wrap: wrap; }
+  .s-body { padding: 18px 20px 96px; }
+}
+
+/* ── Info row ────────────────────────────────────── */
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.info-row .ir-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Output row cards ────────────────────────────── */
+.out-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.out-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress"></div>
+<div class="deck-meta" id="deck-meta">01 / 05</div>
+<div id="deck">
+
+<!-- ═══ S1 — COVER (hero) ═══ -->
+<div class="slide slide-hero active" id="s0">
+  <div class="hero-left">
+    <a class="presentation-home-btn" href="../" aria-label="Back to presentations home"><span class="phb-arrow" aria-hidden="true">←</span> Presentation</a>
+    <div class="hero-tag">[Organisation] · [Month Year] · Confidential</div>
+    <h1>[Title Line 1]<br><em>[Accent]</em></h1>
+    <div class="hero-desc">[One or two lines: what this deck is for.]</div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-sub au au-1">[Supporting paragraph — e.g. cadence, audience, or scope.]</p>
+    <div class="stats-grid au au-2">
+      <div class="stat-box"><div class="stat-val">00</div><div class="stat-label">[Metric]</div></div>
+      <div class="stat-box"><div class="stat-val">00</div><div class="stat-label">[Metric]</div></div>
+      <div class="stat-box"><div class="stat-val">00</div><div class="stat-label">[Metric]</div></div>
+      <div class="stat-box"><div class="stat-val">∞</div><div class="stat-label">[Metric]</div></div>
+    </div>
+    <div class="phase-strip-hero g4 au au-3">
+      <div style="background:var(--teal); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 1</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+      </div>
+      <div style="background:var(--orange); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 2</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+      </div>
+      <div style="background:var(--purple); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 3</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+      </div>
+      <div style="background:var(--blue); padding:12px 14px;">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 4</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S2 — TABLE + CARDS ═══ -->
+<div class="slide" id="s1">
+  <div class="s-nav">
+    <span class="brand">TBH · [Deck Title]</span>
+    <span class="tag">[Section name]</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label">[Overline]</div>
+      <div class="h2">[Slide heading]</div>
+    </div>
+    <div class="hr au au-2"></div>
+    <div class="g2 au au-3" style="flex:1; align-items:start;">
+      <div>
+        <table>
+          <thead><tr><th>Column A</th><th>Column B</th></tr></thead>
+          <tbody>
+            <tr><td>Row 1A</td><td>Row 1B</td></tr>
+            <tr><td>Row 2A</td><td>Row 2B</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:9px;">
+        <div class="card a-teal"><div class="label" style="color:var(--teal);">Card</div><div class="body-sm">[Content — top accent via .a-teal]</div></div>
+        <div class="card a-orange"><div class="label" style="color:var(--orange);">Card</div><div class="body-sm">[Content]</div></div>
+        <div class="card" style="background:var(--bg2);"><div class="label">Neutral</div><div class="body-sm">[Content]</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S3 — PHASE INTRO + INFO ROW ═══ -->
+<div class="slide" id="s2">
+  <div class="s-nav">
+    <span class="brand">TBH · [Deck Title]</span>
+    <span class="tag">[Phase · Timeline]</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+      <div class="p-num" style="background:var(--teal-lt); color:var(--teal); border:1.5px solid #a7f3d0;">1</div>
+      <div>
+        <div class="label" style="color:var(--teal); margin-bottom:2px;">Phase 1</div>
+        <div class="h2">[Phase title]</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">[Subtitle]</div>
+      </div>
+      <div class="info-row au au-2" style="margin:0 0 0 auto; flex-shrink:0;">
+        <span class="ir-item">📅 [Item]</span>
+        <span class="ir-item">📋 [Item]</span>
+      </div>
+    </div>
+    <div class="label au au-3" style="margin-bottom:7px;">Key metrics</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:7px;" class="au au-4">
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Label</div>
+        <div class="s-val" style="color:var(--teal);">00%</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Label</div>
+        <div class="s-val" style="color:var(--teal);">00%</div>
+      </div>
+      <div class="stat" style="border-left-color:var(--purple);">
+        <div class="s-lbl">Label</div>
+        <div class="s-val" style="color:var(--teal);">00%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S4 — DECISION / GO–NO-GO ═══ -->
+<div class="slide" id="s3">
+  <div class="s-nav">
+    <span class="brand">TBH · [Deck Title]</span>
+    <span class="tag">[Decision gate]</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label" style="color:var(--purple);">[Overline]</div>
+      <div class="h2" style="margin-bottom:10px;">[Heading]</div>
+    </div>
+    <div class="hr au au-2"></div>
+    <div style="display:flex; gap:12px; margin-bottom:14px;" class="au au-3">
+      <div class="d-card" style="background:var(--teal-lt); border-color:#a7f3d0; border-top:3px solid var(--teal);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--teal); margin-bottom:6px; text-transform:uppercase;">✓ Go</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">[Criteria]</div>
+        <div class="body-xs">[What happens next.]</div>
+      </div>
+      <div class="d-card" style="background:var(--orange-lt); border-color:#fdba74; border-top:3px solid var(--orange);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--orange); margin-bottom:6px; text-transform:uppercase;">⚠ Conditional</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">[Criteria]</div>
+        <div class="body-xs">[Path B.]</div>
+      </div>
+      <div class="d-card" style="background:var(--coral-lt); border-color:#fca5a5; border-top:3px solid var(--coral);">
+        <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--coral); margin-bottom:6px; text-transform:uppercase;">✗ No-go</div>
+        <div style="font-size:12px; font-weight:600; color:var(--text); margin-bottom:4px;">[Criteria]</div>
+        <div class="body-xs">[Fallback.]</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ S5 — TIMELINE / CLOSE ═══ -->
+<div class="slide" id="s4">
+  <div class="s-nav">
+    <span class="brand">TBH · [Deck Title]</span>
+    <span class="tag">Overall timeline</span>
+  </div>
+  <div class="s-body">
+    <div class="au au-1">
+      <div class="label">[Cadence]</div>
+      <div class="h2" style="margin-bottom:10px;">[Timeline title]</div>
+    </div>
+    <div class="hr au au-2"></div>
+    <div class="g4 au au-3" style="border-radius:10px; overflow:hidden; border:1px solid var(--border); margin-bottom:14px; box-shadow:var(--shadow-sm);">
+      <div style="background:var(--teal); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 1</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">[When]</div>
+      </div>
+      <div style="background:var(--orange); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 2</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">[When]</div>
+      </div>
+      <div style="background:var(--purple); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 3</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">[When]</div>
+      </div>
+      <div style="background:var(--blue); padding:10px 14px;">
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 4</div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">[Name]</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">[When]</div>
+      </div>
+    </div>
+    <div style="margin-top:10px; text-align:center;" class="au au-4">
+      <span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:.08em;">[Org] · [Deck] · [Date] · Confidential</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- #deck -->
+
+<div id="nav">
+  <button type="button" class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>&#8592;</button>
+  <div id="dots"></div>
+  <span id="slide-counter">1 / 5</span>
+  <button type="button" class="nav-btn" id="btn-next" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let current  = 0;
+
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+    var dm = document.getElementById('deck-meta');
+    if (dm) dm.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  navigate(-1);
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End')  goTo(total - 1);
+  });
+
+  document.getElementById('progress').style.width = (1 / total * 100) + '%';
+  var dm0 = document.getElementById('deck-meta');
+  if (dm0) dm0.textContent = '01 / ' + String(total).padStart(2, '0');
+</script>
+</body>
+</html>

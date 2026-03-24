@@ -24,15 +24,23 @@ echo "🚀  Presentation site — GitHub Pages deploy"
 echo "──────────────────────────────────────────"
 
 # ── 1. Check site files exist ───────────────────────────────────
-if [ ! -f "index.html" ] || [ ! -f "fando/index.html" ]; then
-  echo "❌  Need index.html (hub) and fando/index.html (deck)."
+if [ ! -f "index.html" ] || [ ! -f "fando/fando_presentation.html" ]; then
+  echo "❌  Need index.html (hub) and fando/fando_presentation.html (deck)."
+  exit 1
+fi
+if [ ! -f "fando/index.html" ]; then
+  echo "❌  Need fando/index.html (redirect to deck)."
   exit 1
 fi
 if [ ! -f "tbh-ai-adoption/TBH_AI_Adoption_Strategy.html" ]; then
   echo "❌  Need tbh-ai-adoption/TBH_AI_Adoption_Strategy.html"
   exit 1
 fi
-echo "✅  Found index.html + fando/index.html + tbh-ai-adoption deck"
+if [ ! -f "slide-template.html" ]; then
+  echo "❌  Need slide-template.html (hub footer + author starter deck)"
+  exit 1
+fi
+echo "✅  Found index.html + fando (redirect + fando_presentation) + tbh-ai-adoption deck"
 
 # ── 2. Create repo via GitHub API (optional; local PAT only — not GITHUB_ACTIONS) ─
 if [ -n "$TOKEN" ] && [ -z "${GITHUB_ACTIONS:-}" ]; then
@@ -71,15 +79,18 @@ echo "📤  Pushing site to $BRANCH branch ..."
 TMPDIR=$(mktemp -d)
 mkdir -p "$TMPDIR/fando" "$TMPDIR/tbh-ai-adoption"
 cp index.html "$TMPDIR/index.html"
+cp slide-template.html "$TMPDIR/slide-template.html"
 cp fando/index.html "$TMPDIR/fando/index.html"
+cp fando/fando_presentation.html "$TMPDIR/fando/fando_presentation.html"
 cp tbh-ai-adoption/TBH_AI_Adoption_Strategy.html "$TMPDIR/tbh-ai-adoption/index.html"
+cp tbh-ai-adoption/TBH_AI_Adoption_Strategy.html "$TMPDIR/tbh-ai-adoption/TBH_AI_Adoption_Strategy.html"
 cd "$TMPDIR"
 
 git init -q
 git checkout -q -b "$BRANCH"
 git config user.email "deploy@fando-ai-agent"
 git config user.name  "Fando Deploy"
-git add index.html fando/index.html tbh-ai-adoption/index.html
+git add index.html slide-template.html fando/index.html fando/fando_presentation.html tbh-ai-adoption/index.html tbh-ai-adoption/TBH_AI_Adoption_Strategy.html
 git commit -q -m "chore: deploy hub + Fando + TBH AI adoption decks"
 
 if [ -n "$TOKEN" ]; then

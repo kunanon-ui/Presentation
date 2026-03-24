@@ -8,6 +8,7 @@ on:
     branches: [main, master]
     paths:
       - 'index.html'
+      - 'slide-template.html'
       - 'fando/**'
       - 'tbh-ai-adoption/**'
       - 'deploy_to_github.sh'
