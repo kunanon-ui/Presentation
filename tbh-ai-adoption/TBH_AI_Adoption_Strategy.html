@@ -148,27 +148,40 @@ body::before {
   margin-top: 22px;
   line-height: 1.5;
 }
-.hero-left .hub-link {
+.hero-left .presentation-home-btn {
   position: absolute;
   top: 14px;
   left: 14px;
   z-index: 2;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--text);
   text-decoration: none;
-  padding: 7px 12px;
+  padding: 10px 18px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, .94);
+  background: #fff;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  transition: color .15s, border-color .15s;
+  transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.hero-left .hub-link:hover {
+.hero-left .presentation-home-btn .phb-arrow {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: .65;
+}
+.hero-left .presentation-home-btn:hover {
   color: var(--orange);
-  border-color: rgba(234, 88, 12, .25);
+  border-color: rgba(234, 88, 12, .35);
+  box-shadow: 0 2px 10px rgba(234, 88, 12, .1);
+}
+.hero-left .presentation-home-btn:hover .phb-arrow {
+  opacity: 1;
+  color: var(--orange);
 }
 .hero-right {
   flex: 1;
@@ -561,35 +574,39 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 ════════════════════════════════════════════════ -->
 <div class="slide slide-hero active" id="s0">
   <div class="hero-left">
-    <a class="hub-link" href="../">Presentations</a>
+    <a class="presentation-home-btn" href="../" aria-label="Back to presentations home"><span class="phb-arrow" aria-hidden="true">←</span> Presentation</a>
     <div class="hero-tag">The Binary Holdings · March 2026 · Confidential</div>
     <h1>TBH Office<br><em>AI</em><br>Plan</h1>
-    <div class="hero-desc">AI Adoption Strategy — four phases to discover<br>how teams use AI, standardise tools, and measure impact.</div>
+    <div class="hero-desc">AI Adoption Strategy — <strong>four phases, 2 weeks each</strong> (8-week core),<br>then scale from week 7. Discover how teams use AI, standardise tools, and measure impact.</div>
   </div>
   <div class="hero-right">
-    <p class="hero-sub au au-1">Survey-led rollout: listen first, pick the right tools for each job, prove value with baselines, then run a quarterly improvement loop.</p>
+    <p class="hero-sub au au-1">Survey-led rollout: <strong>2 weeks per phase</strong> through pilots (weeks 1–6), rollout from week 7, then a quarterly improvement loop.</p>
     <div class="stats-grid au au-2">
       <div class="stat-box"><div class="stat-val">4</div><div class="stat-label">Phases</div></div>
-      <div class="stat-box"><div class="stat-val">14</div><div class="stat-label">Weeks core programme</div></div>
+      <div class="stat-box"><div class="stat-val">8</div><div class="stat-label">Weeks (4×2) to pilot gate</div></div>
       <div class="stat-box"><div class="stat-val">15</div><div class="stat-label">Survey questions</div></div>
       <div class="stat-box"><div class="stat-val">∞</div><div class="stat-label">Continuous improvement</div></div>
     </div>
     <div class="phase-strip-hero g4 au au-3">
       <div style="background:var(--teal); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
-        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 1 · Wk 1–4</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 1 · Wk 1–2</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Survey &amp; Discover</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
       </div>
       <div style="background:var(--orange); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
-        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 2 · Wk 5–8</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 2 · Wk 3–4</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Design Solutions</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
       </div>
       <div style="background:var(--purple); padding:12px 14px; border-right:1px solid rgba(255,255,255,.15);">
-        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 3 · Wk 9–14</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 3 · Wk 5–6</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Test &amp; Measure</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">2-week sprint</div>
       </div>
       <div style="background:var(--blue); padding:12px 14px;">
-        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 4 · Wk 15+</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:3px; text-transform:uppercase;">Phase 4 · Wk 7+</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Improve &amp; Scale</div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,255,255,.45); margin-top:4px;">From week 7 · ongoing</div>
       </div>
     </div>
   </div>
@@ -607,6 +624,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
     <div class="au au-1">
       <div class="label">Overview</div>
       <div class="h2" style="margin-bottom:10px;">Why This Plan, Why Now</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Cadence: <strong>2 weeks per phase</strong> for Phases 1–3 (weeks 1–6), Go/No-Go end of week 6, Phase 4 from week 7+.</div>
     </div>
     <div class="hr au au-2"></div>
 
@@ -649,7 +667,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
         </div>
         <div class="card" style="background:var(--bg2);">
           <div class="label">Timeline</div>
-          <div class="body-sm">14-week structured rollout → ongoing quarterly improvement cycle from Week 15+</div>
+          <div class="body-sm">8-week structured rollout (2 weeks per phase) → ongoing quarterly improvement cycle from Week 7+</div>
         </div>
       </div>
     </div>
@@ -662,7 +680,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 <div class="slide" id="s2">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 1 · Weeks 1–4</span>
+    <span class="tag">Phase 1 · Weeks 1–2</span>
   </div>
   <div class="s-body">
     <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -670,8 +688,10 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
       <div>
         <div class="label" style="color:var(--teal); margin-bottom:2px;">Phase 1</div>
         <div class="h2">Survey &amp; Discover</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 1–2 · Survey, synthesis &amp; option split</div>
       </div>
       <div class="info-row au au-2" style="margin:0 0 0 auto; flex-shrink:0;">
+        <span class="ir-item">📅 2-week phase</span>
         <span class="ir-item">📋 15 questions</span>
         <span class="ir-item">⏱ 10–15 min</span>
         <span class="ir-item">📣 Slack &amp; Email</span>
@@ -724,7 +744,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
           </div>
           <div class="out-card au au-7">
             <div class="out-icon" style="background:var(--blue-lt);">✅</div>
-            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">Recommended AI Tier Split</div><div class="body-xs">Which tasks → automation vs. LLM vs. coding</div></div>
+            <div><div style="font-size:11.5px; font-weight:600; color:var(--text); margin-bottom:2px;">Recommended AI Option Split</div><div class="body-xs">Which tasks → automation vs. LLM vs. coding</div></div>
           </div>
         </div>
       </div>
@@ -733,19 +753,20 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 </div>
 
 <!-- ════════════════════════════════════════════════
-  S4 — PHASE 2: TWO-TIER ARCHITECTURE
+  S4 — PHASE 2: TWO-OPTION ARCHITECTURE
 ════════════════════════════════════════════════ -->
 <div class="slide" id="s3">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 2 · Weeks 5–8</span>
+    <span class="tag">Phase 2 · Weeks 3–4</span>
   </div>
   <div class="s-body">
     <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
       <div class="p-num" style="background:var(--orange-lt); color:var(--orange); border:1.5px solid #fdba74;">2</div>
       <div>
         <div class="label" style="color:var(--orange); margin-bottom:2px;">Phase 2</div>
-        <div class="h2">Two-Tier AI Architecture</div>
+        <div class="h2">Two-Option AI Architecture</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 3–4 · Architecture &amp; tool direction</div>
       </div>
       <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
         Separation of concerns
@@ -757,8 +778,8 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
         <thead>
           <tr>
             <th style="width:16%;"></th>
-            <th style="color:var(--orange);">⚙️ Tier 1 — Workflow Automation</th>
-            <th>🧠 Tier 2 — LLM AI &amp; Coding</th>
+            <th style="color:var(--orange);">⚙️ Option 1 — Workflow Automation</th>
+            <th>🧠 Option 2 — LLM AI &amp; Coding</th>
           </tr>
         </thead>
         <tbody>
@@ -790,17 +811,18 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 </div>
 
 <!-- ════════════════════════════════════════════════
-  S5 — PHASE 2: TIER 1 DETAIL
+  S5 — PHASE 2: OPTION 1 DETAIL
 ════════════════════════════════════════════════ -->
 <div class="slide" id="s4">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 2 · Tier 1 Tool Selection</span>
+    <span class="tag">Phase 2 · Weeks 3–4 · Option 1 tools</span>
   </div>
   <div class="s-body">
     <div class="au au-1">
-      <div class="label" style="color:var(--orange);">Tier 1 — Workflow Automation</div>
+      <div class="label" style="color:var(--orange);">Option 1 — Workflow Automation</div>
       <div class="h2" style="margin-bottom:10px;">n8n vs Make</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Phase 2 window: weeks 3–4 (2-week sprint)</div>
     </div>
     <div class="hr au au-2"></div>
 
@@ -851,12 +873,13 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 <div class="slide" id="s5">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 2 · Decision Framework</span>
+    <span class="tag">Phase 2 · Weeks 3–4 · Decision Framework</span>
   </div>
   <div class="s-body">
     <div class="au au-1">
       <div class="label">Quick-reference guide · Share with all employees during onboarding</div>
       <div class="h2" style="margin-bottom:10px;">Which Tool for Which Task?</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:2px;">Phase 2 window: weeks 3–4 (2-week sprint)</div>
     </div>
     <div class="hr au au-2"></div>
 
@@ -931,7 +954,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 <div class="slide" id="s6">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 3 · Weeks 9–14</span>
+    <span class="tag">Phase 3 · Weeks 5–6</span>
   </div>
   <div class="s-body">
     <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -939,6 +962,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
       <div>
         <div class="label" style="color:var(--purple); margin-bottom:2px;">Phase 3</div>
         <div class="h2">Test &amp; Measure</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">2-week phase · Weeks 5–6 · Pilots + Go/No-Go at end of week 6</div>
       </div>
       <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
         Impact proven with data, not perception
@@ -950,14 +974,14 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
         <thead>
           <tr>
             <th style="width:16%;"></th>
-            <th style="color:var(--orange);">⚙️ Tier 1: Automation Pilot (Wk 9–10)</th>
-            <th style="color:var(--purple);">🧠 Tier 2: LLM AI Pilot (Wk 11–12)</th>
+            <th style="color:var(--orange);">⚙️ Option 1: Automation Pilot (Wk 5)</th>
+            <th style="color:var(--purple);">🧠 Option 2: LLM AI Pilot (Wk 6)</th>
           </tr>
         </thead>
         <tbody>
           <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Teams</td><td>Ops + Finance (highest repetitive volume)</td><td>All teams (Product + Growth first, then Eng + Finance)</td></tr>
           <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted);">Setup</td><td>Engineering deploys. Ops runs 2-hr workshop. Top 3 templates.</td><td>IT provisions accounts. 1-hr role-specific onboarding.</td></tr>
-          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">Success</td><td>≥1 workflow running autonomously with measurable time saving</td><td>≥60% of participants using tool 3+ times/week by Wk 12</td></tr>
+          <tr><td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">Success</td><td>≥1 workflow running autonomously with measurable time saving</td><td>≥60% of participants using tool 3+ times/week by end of Wk 6</td></tr>
         </tbody>
       </table>
     </div>
@@ -998,12 +1022,13 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 <div class="slide" id="s7">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 3 · Week 14 Decision Gate</span>
+    <span class="tag">Phase 3 · Week 6 Decision Gate</span>
   </div>
   <div class="s-body">
     <div class="au au-1">
       <div class="label" style="color:var(--purple);">Go / No-Go Decision Gate</div>
-      <div class="h2" style="margin-bottom:10px;">Review pilot data at end of Week 14</div>
+      <div class="h2" style="margin-bottom:10px;">Review pilot data at end of Week 6</div>
+      <div class="body-xs" style="color:var(--muted); margin-top:4px;">Closes the 2-week Phase 3 window (weeks 5–6) before Phase 4 rollout.</div>
     </div>
     <div class="hr au au-2"></div>
 
@@ -1045,7 +1070,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 <div class="slide" id="s8">
   <div class="s-nav">
     <span class="brand">TBH · AI Adoption Strategy</span>
-    <span class="tag">Phase 4 · Weeks 15+</span>
+    <span class="tag">Phase 4 · Week 7+</span>
   </div>
   <div class="s-body">
     <div class="au au-1" style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
@@ -1053,6 +1078,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
       <div>
         <div class="label" style="color:var(--blue); margin-bottom:2px;">Phase 4</div>
         <div class="h2">Improve &amp; Scale</div>
+        <div class="body-xs" style="color:var(--muted); margin-top:4px;">From week 7 onward · Rollout + quarterly improvement (ongoing)</div>
       </div>
       <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); background:var(--bg2); border:1px solid var(--border); padding:5px 12px; border-radius:20px;">
         Quarterly operating rhythm — not a one-time step
@@ -1112,7 +1138,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
   </div>
   <div class="s-body">
     <div class="au au-1">
-      <div class="label">14-Week Programme + Ongoing Quarterly Cycle</div>
+      <div class="label">8-Week Programme (2 Weeks per Phase) + Ongoing Quarterly Cycle</div>
       <div class="h2" style="margin-bottom:10px;">Overall Timeline</div>
     </div>
     <div class="hr au au-2"></div>
@@ -1122,22 +1148,22 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
       <div style="background:var(--teal); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
         <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 1</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Survey &amp; Discover</div>
-        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 1–4</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 1–2 · 2 wk</div>
       </div>
       <div style="background:var(--orange); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
         <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 2</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Design Solutions</div>
-        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 5–8</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 3–4 · 2 wk</div>
       </div>
       <div style="background:var(--purple); padding:10px 14px; border-right:1px solid rgba(255,255,255,.15);">
         <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 3</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Test &amp; Measure</div>
-        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 9–14</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 5–6 · 2 wk</div>
       </div>
       <div style="background:var(--blue); padding:10px 14px;">
         <div style="font-family:'DM Mono',monospace; font-size:8.5px; letter-spacing:.14em; color:rgba(255,255,255,.6); margin-bottom:2px; text-transform:uppercase;">Phase 4</div>
         <div style="font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; color:#fff;">Improve &amp; Scale</div>
-        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Weeks 15+</div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:rgba(255,255,255,.5); margin-top:2px;">Week 7+ · ongoing</div>
       </div>
     </div>
 
@@ -1149,23 +1175,23 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
         <tbody>
           <tr>
             <td><span class="pill" style="background:var(--teal-lt); color:var(--teal);">Phase 1</span></td>
-            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--teal);">1–4</td>
-            <td>Wk 1: Survey launched → Wk 2: All responses in → Wk 3: AI landscape report drafted → Wk 4: Tool tier split presented to leadership</td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--teal);">1–2</td>
+            <td>Wk 1: Survey launched + responses in → Wk 2: AI landscape report drafted + tool option split presented to leadership</td>
           </tr>
           <tr>
             <td><span class="pill" style="background:var(--orange-lt); color:var(--orange);">Phase 2</span></td>
-            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--orange);">5–8</td>
-            <td>Wk 5: Tool selection confirmed → Wk 6: Template library built → Wk 7: Platform deployed, accounts provisioned → Wk 8: Decision framework ready</td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--orange);">3–4</td>
+            <td>Wk 3: Tool selection confirmed + template library built → Wk 4: Platform deployed, accounts provisioned + decision framework ready</td>
           </tr>
           <tr>
             <td><span class="pill" style="background:var(--purple-lt); color:var(--purple);">Phase 3</span></td>
-            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">9–14</td>
-            <td>Wk 9: Baseline captured → Wk 9–10: Tier 1 pilot → Wk 11–12: Tier 2 pilot (all teams) → Wk 13–14: Post-pilot + Go/No-Go decision</td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--purple);">5–6</td>
+            <td>Wk 5: Baseline captured + Option 1 pilot → Wk 6: Option 2 pilot (all teams) + post-pilot Go/No-Go decision</td>
           </tr>
           <tr>
             <td><span class="pill" style="background:var(--blue-lt); color:var(--blue);">Phase 4</span></td>
-            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--blue);">15+</td>
-            <td>Wk 15: Full rollout → Wk 19: First post-implementation survey → Wk 21: Improvement backlog with leadership → Ongoing: Quarterly loop</td>
+            <td style="font-family:'DM Mono',monospace; font-size:10px; color:var(--blue);">7+</td>
+            <td>Wk 7: Full rollout begins → first post-implementation survey in Q1 → improvement backlog with leadership → Ongoing: Quarterly loop</td>
           </tr>
         </tbody>
       </table>
