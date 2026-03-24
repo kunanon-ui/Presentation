@@ -9,8 +9,14 @@
 set -e
 
 TOKEN="${GITHUB_TOKEN:-}"
-USER="kunanon-ui"
-REPO="Presentation"
+# In GitHub Actions, GITHUB_REPOSITORY is owner/repo (override local defaults).
+if [ -n "${GITHUB_REPOSITORY:-}" ]; then
+  USER="${GITHUB_REPOSITORY%%/*}"
+  REPO="${GITHUB_REPOSITORY#*/}"
+else
+  USER="kunanon-ui"
+  REPO="Presentation"
+fi
 BRANCH="gh-pages"
 
 echo ""
@@ -28,8 +34,8 @@ if [ ! -f "tbh-ai-adoption/TBH_AI_Adoption_Strategy.html" ]; then
 fi
 echo "✅  Found index.html + fando/index.html + tbh-ai-adoption deck"
 
-# ── 2. Create repo via GitHub API (optional; skip if no token) ─
-if [ -n "$TOKEN" ]; then
+# ── 2. Create repo via GitHub API (optional; local PAT only — not GITHUB_ACTIONS) ─
+if [ -n "$TOKEN" ] && [ -z "${GITHUB_ACTIONS:-}" ]; then
   echo ""
   echo "📦  Ensuring repo $USER/$REPO exists ..."
   HTTP=$(curl -s -o /tmp/gh_repo.json -w "%{http_code}" \
@@ -77,7 +83,7 @@ git add index.html fando/index.html tbh-ai-adoption/index.html
 git commit -q -m "chore: deploy hub + Fando + TBH AI adoption decks"
 
 if [ -n "$TOKEN" ]; then
-  REMOTE="https://$TOKEN@github.com/$USER/$REPO.git"
+  REMOTE="https://x-access-token:$TOKEN@github.com/$USER/$REPO.git"
 else
   REMOTE="https://github.com/$USER/$REPO.git"
 fi

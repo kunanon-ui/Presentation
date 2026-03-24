@@ -148,6 +148,28 @@ body::before {
   margin-top: 22px;
   line-height: 1.5;
 }
+.hero-left .hub-link {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .94);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: color .15s, border-color .15s;
+}
+.hero-left .hub-link:hover {
+  color: var(--orange);
+  border-color: rgba(234, 88, 12, .25);
+}
 .hero-right {
   flex: 1;
   display: flex;
@@ -539,6 +561,7 @@ tbody tr:nth-child(even) td { background: var(--bg2); }
 ════════════════════════════════════════════════ -->
 <div class="slide slide-hero active" id="s0">
   <div class="hero-left">
+    <a class="hub-link" href="../">Presentations</a>
     <div class="hero-tag">The Binary Holdings · March 2026 · Confidential</div>
     <h1>TBH Office<br><em>AI</em><br>Plan</h1>
     <div class="hero-desc">AI Adoption Strategy — four phases to discover<br>how teams use AI, standardise tools, and measure impact.</div>
